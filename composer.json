@@ -1,6 +1,6 @@
 {
     "name": "spatie/query-string",
-    "description": "Work with query strings",
+    "description": "Manipulate query strings",
     "keywords": [
         "spatie",
         "query-string"
