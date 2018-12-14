@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Spatie\QueryString;
 
-class StringHelper
+final class StringHelper
 {
     public static function endsWith(string $haystack, $needles): bool
     {
