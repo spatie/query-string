@@ -75,18 +75,13 @@ final class Ast implements ArrayAccess
             return $ast;
         }
 
-        if (
-            $node instanceof SingleNode
-            && $node->value() === $value
-        ) {
+        if ($node instanceof SingleNode && $node->value() === $value) {
             unset($ast[$name]);
 
             return $ast;
         }
 
-        if (
-            $node instanceof MultiNode
-        ) {
+        if ($node instanceof MultiNode) {
             $ast[$name] = $node->remove($value);
 
             return $ast;
