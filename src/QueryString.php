@@ -6,7 +6,6 @@ namespace Spatie\QueryString;
 
 use Spatie\QueryString\Ast\Ast;
 
-// todo: Laravel package
 final class QueryString
 {
     /** @var string */

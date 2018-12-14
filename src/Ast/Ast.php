@@ -8,7 +8,6 @@ use ArrayAccess;
 use Spatie\QueryString\StringHelper;
 use TypeError;
 
-// todo: Sorteren mogelijk maken
 final class Ast implements ArrayAccess
 {
     /** @var \Spatie\QueryString\Ast\Node[] */
