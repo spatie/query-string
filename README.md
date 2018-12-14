@@ -36,19 +36,19 @@ $queryString->filter('toggle');
 #### Single value filters
 
 ```php
-# / > /?single=A
+# / > /?single=a
 
 $queryString->filter('single', 'a');
 ```
 
 ```php
-# /?single=A > /?single=B
+# /?single=a > /?single=b
 
 $queryString->filter('single', 'b');
 ```
 
 ```php
-# /?single=A > /?
+# /?single=a > /?
 
 $queryString->filter('single', 'a');
 ```
@@ -56,14 +56,14 @@ $queryString->filter('single', 'a');
 #### Multi value filters
 
 ```php
-# / > /?multi[]=A&multi[]=B
+# / > /?multi[]=a&multi[]=b
 
 $queryString->filter('multi[]', 'a');
 $queryString->filter('multi[]', 'b');
 ```
 
 ```php
-# /?multi[]=A&multi[]=B > /?multi[]=A
+# /?multi[]=a&multi[]=b > /?multi[]=a
 
 $queryString->filter('multi[]', 'b');
 ```
@@ -89,13 +89,13 @@ $queryString->clear('toggle');
 ```
 
 ```php
-# /?single=B > /
+# /?single=b > /
 
 $queryString->clear('single');
 ```
 
 ```php
-# /?multi[]=A&multi[]=B > /
+# /?multi[]=a&multi[]=b > /
 
 $queryString->clear('multi[]');
 ```
@@ -103,7 +103,7 @@ $queryString->clear('multi[]');
 #### Active parameter or not
 
 ```
-# /?multi[]=A
+# /?multi[]=a
 
 $queryString->isActive('multi[]'); # true
 $queryString->isActive('multi[]', 'a'); # true
@@ -111,7 +111,7 @@ $queryString->isActive('multi[]', 'b'); # false
 ```
 
 ```
-# /?single=A
+# /?single=a
 
 $queryString->isActive('single'); # true
 $queryString->isActive('single', 'a'); # true
