@@ -1,11 +1,11 @@
 {
-    "name": "spatie/query-filter",
-    "description": "Toggle URL query parameters",
+    "name": "spatie/query-string",
+    "description": "Work with query strings",
     "keywords": [
         "spatie",
-        "query-filter"
+        "query-string"
     ],
-    "homepage": "https://github.com/spatie/query-filter",
+    "homepage": "https://github.com/spatie/query-string",
     "license": "MIT",
     "authors": [
         {
@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Spatie\\QueryString\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Spatie\\QueryString\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -41,13 +41,5 @@
         "sort-packages": true
     },
     "extra": {
-        "laravel": {
-            "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
-            }
-        }
     }
 }

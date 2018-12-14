@@ -1,27 +1,133 @@
-# Very short description of the package
+# QueryString
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/query-filter.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
 [![Build Status](https://img.shields.io/travis/spatie/query-filter/master.svg?style=flat-square)](https://travis-ci.org/spatie/:package_name)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/query-filter.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/:package_name)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/query-filter.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
 
-
-This is where your description should go. Try and limit it to a paragraph or two.
+Work with query strings
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require spatie/query-filter
+composer require spatie/query-string
 ```
 
 ## Usage
 
 ``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+use Spatie\QueryString\QueryString;
+
+$queryString = new QueryString($uri);
 ```
+
+### Filters
+
+#### Toggleable filters
+
+```php
+# / > /?toggle
+
+$queryString->filter('toggle');
+```
+
+#### Single value filters
+
+```php
+# / > /?single=A
+
+$queryString->filter('single', 'a');
+```
+
+```php
+# /?single=A > /?single=B
+
+$queryString->filter('single', 'b');
+```
+
+```php
+# /?single=A > /?
+
+$queryString->filter('single', 'a');
+```
+
+#### Multi value filters
+
+```php
+# / > /?multi[]=A&multi[]=B
+
+$queryString->filter('multi[]', 'a');
+$queryString->filter('multi[]', 'b');
+```
+
+```php
+# /?multi[]=A&multi[]=B > /?multi[]=A
+
+$queryString->filter('multi[]', 'b');
+```
+
+### Other useful methods
+
+
+#### Base URL
+
+Casting a `QueryString` to a string will generate the URL. 
+You can choose to use a different base URL like so:
+
+```php
+$queryString->withBaseUrl('https://other.url');
+```
+
+#### Clear a parameter
+
+```php
+# /?toggle > /
+
+$queryString->clear('toggle');
+```
+
+```php
+# /?single=B > /
+
+$queryString->clear('single');
+```
+
+```php
+# /?multi[]=A&multi[]=B > /
+
+$queryString->clear('multi[]');
+```
+
+#### Active parameter or not
+
+```
+# /?multi[]=A
+
+$queryString->isActive('multi[]'); # true
+$queryString->isActive('multi[]', 'a'); # true
+$queryString->isActive('multi[]', 'b'); # false
+```
+
+```
+# /?single=A
+
+$queryString->isActive('single'); # true
+$queryString->isActive('single', 'a'); # true
+$queryString->isActive('single', 'b'); # false
+```
+
+```
+# /?toggle
+
+$queryString->isActive('toggle'); # true
+```
+
+### Laravel support
+
+A separate Laravel package will be added in the future.
+The Laravel package will use this one under the hood and implement the JSON API spec.
 
 ### Testing
 
