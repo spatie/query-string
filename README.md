@@ -23,53 +23,87 @@ use Spatie\QueryString\QueryString;
 $queryString = new QueryString($uri);
 ```
 
-### Filters
+### Toggle parameters
 
-#### Toggleable filters
+#### A single toggle
 
 ```php
 # / > /?toggle
 
-$queryString->filter('toggle');
+$queryString->toggle('toggle');
 ```
 
-#### Single value filters
+#### Toggle a value
 
 ```php
 # / > /?single=a
 
-$queryString->filter('single', 'a');
+$queryString->toggle('single', 'a');
 ```
 
 ```php
 # /?single=a > /?single=b
 
-$queryString->filter('single', 'b');
+$queryString->toggle('single', 'b');
 ```
 
 ```php
 # /?single=a > /?
 
-$queryString->filter('single', 'a');
+$queryString->toggle('single', 'a');
 ```
 
-#### Multi value filters
+#### Toggle multiple values
 
 ```php
 # / > /?multi[]=a&multi[]=b
 
-$queryString->filter('multi[]', 'a');
-$queryString->filter('multi[]', 'b');
+$queryString->toggle('multi[]', 'a');
+$queryString->toggle('multi[]', 'b');
 ```
 
 ```php
 # /?multi[]=a&multi[]=b > /?multi[]=a
 
-$queryString->filter('multi[]', 'b');
+$queryString->toggle('multi[]', 'b');
+```
+
+### Filter
+
+Filtering the query string will use the JSON API filter syntax.
+
+```php
+# / > /?filter[field]=a
+
+$queryString->filter('field', 'a');
+```
+
+```php
+# / > /?filter[field][]=b
+
+$queryString->filter('field[]', 'b');
+```
+
+### Sort
+
+Sorting the query string will use the JSON API sort syntax.
+At the moment only single sorts are supported.
+
+```php
+# / > /?sort=field > /?sort=-field > /?sort=field
+
+$queryString->sort('field');
+$queryString->sort('field');
+$queryString->sort('field');
+```
+
+```php
+# / > /?filter[field][]=b
+
+$queryString->filter('field[]', 'b');
 ```
 
 ### Other useful methods
-
 
 #### Base URL
 

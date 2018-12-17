@@ -14,6 +14,12 @@ final class QueryString
     /** @var \Spatie\QueryString\Ast\Ast */
     private $ast;
 
+    /** @var string */
+    private $filterName = 'filter';
+
+    /** @var string */
+    private $sortName = 'sort';
+
     public static function new(string $uri): QueryString
     {
         return new self($uri);
@@ -30,6 +36,11 @@ final class QueryString
         $this->baseUrl = $baseUrl;
 
         $this->ast = new Ast($query);
+    }
+
+    public function __toString()
+    {
+        return "{$this->baseUrl}?{$this->ast}";
     }
 
     public function withBaseUrl(string $baseUrl): QueryString
@@ -52,7 +63,7 @@ final class QueryString
         return $this->ast[$name]->isActive($value);
     }
 
-    public function filter(
+    public function toggle(
         string $name,
         ?string $value = null
     ): QueryString {
@@ -74,7 +85,7 @@ final class QueryString
         return $queryString;
     }
 
-    public function enable(string $name, ?string $value): QueryString
+    public function enable(string $name, ?string $value = null): QueryString
     {
         $queryString = clone $this;
 
@@ -83,7 +94,7 @@ final class QueryString
         return $queryString;
     }
 
-    public function disable(string $name, ?string $value): QueryString
+    public function disable(string $name, ?string $value = null): QueryString
     {
         $queryString = clone $this;
 
@@ -92,8 +103,49 @@ final class QueryString
         return $queryString;
     }
 
-    public function __toString()
+    public function filter(string $name, ?string $value = null): QueryString
     {
-        return "{$this->baseUrl}?{$this->ast}";
+        $filterName = $this->resolveFilterName($name);
+
+        return $this->toggle($filterName, $value);
+    }
+
+    public function sort(string $value): QueryString
+    {
+        $value = $this->resolveSortValue($value);
+
+        return $this->toggle($this->sortName, $value);
+    }
+
+    private function resolveFilterName($name): string
+    {
+        $isMultiple = StringHelper::endsWith($name, '[]');
+
+        if ($isMultiple) {
+            $name = StringHelper::replaceLast('[]', '', $name);
+        }
+
+        if (strpos($name, "{$this->filterName}[") !== 0) {
+            $name = "{$this->filterName}[{$name}]";
+        }
+
+        if ($isMultiple) {
+            $name .= '[]';
+        }
+
+        return $name;
+    }
+
+    private function resolveSortValue(string $value): string
+    {
+        if (! $this->isActive($this->sortName, $value)) {
+            return $value;
+        }
+
+        if (StringHelper::startsWith($value, '-')) {
+            return substr($value, 1);
+        }
+
+        return "-{$value}";
     }
 }

@@ -6,12 +6,15 @@ namespace Spatie\QueryString;
 
 final class StringHelper
 {
-    public static function endsWith(string $haystack, $needles): bool
+    public static function startsWith(string $haystack, string $needle): bool
     {
-        foreach ((array) $needles as $needle) {
-            if (substr($haystack, -strlen($needle)) === (string) $needle) {
-                return true;
-            }
+        return strpos($haystack, $needle) === 0;
+    }
+
+    public static function endsWith(string $haystack, string $needle): bool
+    {
+        if (substr($haystack, -strlen($needle)) === (string) $needle) {
+            return true;
         }
 
         return false;

@@ -10,21 +10,21 @@ use Spatie\QueryString\QueryString;
 class QueryStringTest extends TestCase
 {
     /** @test */
-    public function it_can_toggle_a_filter_without_value()
+    public function it_can_toggle_a_toggle_without_value()
     {
-        $this->assertEquals('/?value', QueryString::new('/')->filter('value'));
+        $this->assertEquals('/?value', QueryString::new('/')->toggle('value'));
 
-        $this->assertEquals('/?', QueryString::new('/?value')->filter('value'));
+        $this->assertEquals('/?', QueryString::new('/?value')->toggle('value'));
     }
 
     /** @test */
-    public function it_can_clear_a_filter_without_value()
+    public function it_can_clear_a_toggle_without_value()
     {
         $this->assertEquals('/?', QueryString::new('/?value')->clear('value'));
     }
 
     /** @test */
-    public function active_for_filter_without_value()
+    public function active_for_toggle_without_value()
     {
         $this->assertTrue(QueryString::new('/?value')->isActive('value'));
         $this->assertFalse(QueryString::new('/?')->isActive('value'));
@@ -33,21 +33,21 @@ class QueryStringTest extends TestCase
     /** @test */
     public function it_can_toggle_a_single_value()
     {
-        $this->assertEquals('/?value=a', QueryString::new('/')->filter('value', 'a'));
+        $this->assertEquals('/?value=a', QueryString::new('/')->toggle('value', 'a'));
 
-        $this->assertEquals('/?', QueryString::new('/?value=a')->filter('value', 'a'));
+        $this->assertEquals('/?', QueryString::new('/?value=a')->toggle('value', 'a'));
 
-        $this->assertEquals('/?value=b', QueryString::new('/?value=a')->filter('value', 'b'));
+        $this->assertEquals('/?value=b', QueryString::new('/?value=a')->toggle('value', 'b'));
     }
 
     /** @test */
-    public function it_can_clear_a_single_filter()
+    public function it_can_clear_a_single_toggle()
     {
         $this->assertEquals('/?', QueryString::new('/?value=a')->clear('value'));
     }
 
     /** @test */
-    public function active_for_single_filter()
+    public function active_for_single_toggle()
     {
         $this->assertTrue(QueryString::new('/?value=a')->isActive('value', 'a'));
         $this->assertFalse(QueryString::new('/?value=a')->isActive('value', 'b'));
@@ -55,26 +55,74 @@ class QueryStringTest extends TestCase
     }
 
     /** @test */
-    public function it_can_toggle_a_multi_filter()
+    public function it_can_toggle_a_multi_toggle()
     {
-        $this->assertEquals('/?', QueryString::new('/?value[]=a')->filter('value[]', 'a'));
-        $this->assertEquals('/?value[]=a&value[]=b', QueryString::new('/?value[]=a')->filter('value[]', 'b'));
-        $this->assertEquals('/?value[]=b', QueryString::new('/?value[]=a&value[]=b')->filter('value[]', 'a'));
-        $this->assertEquals('/?value[]=a', QueryString::new('/')->filter('value[]', 'a'));
+        $this->assertEquals('/?', QueryString::new('/?value[]=a')->toggle('value[]', 'a'));
+        $this->assertEquals('/?value[]=a&value[]=b', QueryString::new('/?value[]=a')->toggle('value[]', 'b'));
+        $this->assertEquals('/?value[]=b', QueryString::new('/?value[]=a&value[]=b')->toggle('value[]', 'a'));
+        $this->assertEquals('/?value[]=a', QueryString::new('/')->toggle('value[]', 'a'));
     }
 
     /** @test */
-    public function it_can_clear_a_multi_filter()
+    public function it_can_clear_a_multi_toggle()
     {
         $this->assertEquals('/?', QueryString::new('/?value[]=a&value[]=b')->clear('value[]'));
     }
 
     /** @test */
-    public function active_for_multi_filter()
+    public function active_for_multi_toggle()
     {
         $this->assertTrue(QueryString::new('/?value[]=a')->isActive('value[]', 'a'));
         $this->assertTrue(QueryString::new('/?value[]=a')->isActive('value[]'));
         $this->assertFalse(QueryString::new('/?value[]=a')->isActive('value[]', 'b'));
         $this->assertFalse(QueryString::new('/?')->isActive('value[]', 'a'));
+    }
+
+    /** @test */
+    public function a_filter_without_value_can_be_toggled()
+    {
+        $queryString = new QueryString('/');
+
+        $queryString = $queryString->filter('value');
+
+        $this->assertEquals('/?filter[value]', (string) $queryString);
+    }
+
+    /** @test */
+    public function a_filter_with_single_value_can_be_toggled()
+    {
+        $queryString = new QueryString('/');
+
+        $queryString = $queryString->filter('value', 'a');
+
+        $this->assertEquals('/?filter[value]=a', (string) $queryString);
+    }
+
+    /** @test */
+    public function a_filter_with_multiple_values_can_be_toggled()
+    {
+        $queryString = new QueryString('/');
+
+        $queryString = $queryString->filter('value[]', 'a');
+
+        $this->assertEquals('/?filter[value][]=a', (string) $queryString);
+    }
+
+    /** @test */
+    public function sort_can_be_toggled()
+    {
+        $queryString = new QueryString('/');
+
+        $queryString = $queryString->sort('id');
+
+        $this->assertEquals('/?sort=id', (string) $queryString);
+
+        $queryString = $queryString->sort('id');
+
+        $this->assertEquals('/?sort=-id', (string) $queryString);
+
+        $queryString = $queryString->sort('id');
+
+        $this->assertEquals('/?sort=id', (string) $queryString);
     }
 }
