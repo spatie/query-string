@@ -54,7 +54,7 @@ final class QueryString
 
     public function isActive(
         string $name,
-        ?string $value = null
+        $value = null
     ): bool {
         if (! isset($this->ast[$name])) {
             return false;
@@ -65,7 +65,7 @@ final class QueryString
 
     public function toggle(
         string $name,
-        ?string $value = null
+        $value = null
     ): QueryString {
         return $this->isActive($name, $value)
             ? $this->disable($name, $value)
@@ -85,7 +85,7 @@ final class QueryString
         return $queryString;
     }
 
-    public function enable(string $name, ?string $value = null): QueryString
+    public function enable(string $name, $value = null): QueryString
     {
         $queryString = clone $this;
 
@@ -94,7 +94,7 @@ final class QueryString
         return $queryString;
     }
 
-    public function disable(string $name, ?string $value = null): QueryString
+    public function disable(string $name, $value = null): QueryString
     {
         $queryString = clone $this;
 
@@ -103,14 +103,14 @@ final class QueryString
         return $queryString;
     }
 
-    public function filter(string $name, ?string $value = null): QueryString
+    public function filter(string $name, $value = null): QueryString
     {
         $filterName = $this->resolveFilterName($name);
 
         return $this->toggle($filterName, $value);
     }
 
-    public function sort(string $value): QueryString
+    public function sort($value): QueryString
     {
         $value = $this->resolveSortValue($value);
 
@@ -136,7 +136,7 @@ final class QueryString
         return $name;
     }
 
-    private function resolveSortValue(string $value): string
+    private function resolveSortValue($value): string
     {
         if (! $this->isActive($this->sortName, $value)) {
             return $value;
