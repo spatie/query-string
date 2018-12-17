@@ -125,4 +125,22 @@ class QueryStringTest extends TestCase
 
         $this->assertEquals('/?sort=id', (string) $queryString);
     }
+
+    /** @test */
+    public function sort_can_be_toggled_in_reverse()
+    {
+        $queryString = new QueryString('/');
+
+        $queryString = $queryString->sort('-id');
+
+        $this->assertEquals('/?sort=-id', (string) $queryString);
+
+        $queryString = $queryString->sort('-id');
+
+        $this->assertEquals('/?sort=id', (string) $queryString);
+
+        $queryString = $queryString->sort('-id');
+
+        $this->assertEquals('/?sort=-id', (string) $queryString);
+    }
 }
