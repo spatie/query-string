@@ -145,4 +145,16 @@ class AstTest extends TestCase
         $this->assertTrue(isset($node->values()['a']));
         $this->assertFalse(isset($node->values()['b']));
     }
+
+    /** @test */
+    public function a_multi_node_can_be_cleared()
+    {
+        $ast = new Ast();
+
+        $ast = $ast->add('multiValue[]', 'a');
+
+        $ast = $ast->remove('multiValue[]', null);
+
+        $this->assertFalse(isset($ast['multiValue[]']));
+    }
 }
