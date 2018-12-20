@@ -93,7 +93,7 @@ class AstTest extends TestCase
 
         $this->assertInstanceOf(SingleNode::class, $ast['singleValue']);
 
-        /** @var SingleNode $node */
+        /** @var \Spatie\QueryString\Ast\SingleNode $node */
         $node = $ast['singleValue'];
 
         $this->assertEquals('b', $node->value());
