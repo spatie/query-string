@@ -1,9 +1,9 @@
 # QueryString
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/query-filter.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
-[![Build Status](https://img.shields.io/travis/spatie/query-filter/master.svg?style=flat-square)](https://travis-ci.org/spatie/:package_name)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/query-filter.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/:package_name)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/query-filter.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/query-filter.svg?style=flat-square)](https://packagist.org/packages/spatie/query-string)
+[![Build Status](https://img.shields.io/travis/spatie/query-filter/master.svg?style=flat-square)](https://travis-ci.org/spatie/query-string)
+[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/query-filter.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/query-string)
+[![Total Downloads](https://img.shields.io/packagist/dt/spatie/query-filter.svg?style=flat-square)](https://packagist.org/packages/spatie/query-string)
 
 Work with query strings
 
