@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Spatie\QueryString\Ast;
 
+use TypeError;
 use ArrayAccess;
 use Spatie\QueryString\StringHelper;
-use TypeError;
 
 final class Ast implements ArrayAccess
 {
@@ -102,7 +102,7 @@ final class Ast implements ArrayAccess
     public function offsetSet($offset, $value): void
     {
         if (! $value instanceof Node) {
-            throw new TypeError('Value must be instance of ' . Node::class);
+            throw new TypeError('Value must be instance of '.Node::class);
         }
 
         $this->nodes[$offset] = $value;
