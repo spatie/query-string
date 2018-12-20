@@ -52,10 +52,7 @@ final class QueryString
         return $queryString;
     }
 
-    public function isActive(
-        string $name,
-        $value = null
-    ): bool {
+    public function isActive(string $name, $value = null): bool {
         if (! isset($this->ast[$name])) {
             return false;
         }
@@ -63,10 +60,7 @@ final class QueryString
         return $this->ast[$name]->isActive($value);
     }
 
-    public function toggle(
-        string $name,
-        $value = null
-    ): QueryString {
+    public function toggle(string $name, $value = null): QueryString {
         return $this->isActive($name, $value)
             ? $this->disable($name, $value)
             : $this->enable($name, $value);
