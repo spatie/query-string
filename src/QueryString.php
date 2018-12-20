@@ -25,7 +25,7 @@ final class QueryString
         return new self($uri);
     }
 
-    public function __construct(string $uri= '')
+    public function __construct(string $uri = '')
     {
         if (strpos($uri, '?') === false) {
             $uri = "{$uri}?";
