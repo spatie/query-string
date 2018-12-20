@@ -47,7 +47,7 @@ final class Ast implements ArrayAccess
     {
         $ast = clone $this;
 
-        $definition = $value !== null
+        $definition = ! is_null($value)
             ? "{$name}={$value}"
             : $name;
 
