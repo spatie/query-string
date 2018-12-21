@@ -98,12 +98,6 @@ $queryString->sort('field');
 $queryString->sort('field');
 ```
 
-```php
-# / > /?filter[field][]=b
-
-$queryString->filter('field[]', 'b');
-```
-
 ### Other useful methods
 
 #### Base URL
