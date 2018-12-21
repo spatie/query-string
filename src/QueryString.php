@@ -27,9 +27,7 @@ final class QueryString
 
     public function __construct(string $uri = '')
     {
-        if (strpos($uri, '?') === false) {
-            $uri = "{$uri}?";
-        }
+        $uri = StringHelper::ensureEndsWith($uri, '?');
 
         [$baseUrl, $query] = explode('?', $uri);
 

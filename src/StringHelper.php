@@ -20,6 +20,15 @@ final class StringHelper
         return false;
     }
 
+    public static function ensureEndsWith(string $subject, string $needle): string
+    {
+        if (strpos($subject, $needle) === false) {
+            $subject = $subject . $needle;
+        }
+
+        return $subject;
+    }
+
     public static function replaceLast(string $search, string $replace, string $subject): string
     {
         $position = strrpos($subject, $search);
