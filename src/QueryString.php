@@ -109,7 +109,7 @@ final class QueryString
         return $this->toggle($this->sortName, $value);
     }
 
-    private function resolveFilterName($name): string
+    public function resolveFilterName($name): string
     {
         $isMultiple = StringHelper::endsWith($name, '[]');
 
@@ -128,7 +128,7 @@ final class QueryString
         return $name;
     }
 
-    private function resolveSortValue($value): string
+    public function resolveSortValue($value): string
     {
         if (! $this->isActive($this->sortName, $value)) {
             return $value;
