@@ -143,4 +143,15 @@ class QueryStringTest extends TestCase
 
         $this->assertEquals('/?sort=-id', (string) $queryString);
     }
+
+    /** @test */
+    public function it_can_set_with_base_url()
+    {
+        $queryString = new QueryString('/base/url');
+
+        $queryString = $queryString->withBaseUrl('/base/urls');
+
+        $this->assertInstanceOf(QueryString::class, $queryString);
+        $this->assertEquals('/base/urls?', (string) $queryString);
+    }
 }
