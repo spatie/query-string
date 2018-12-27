@@ -73,6 +73,32 @@ class AstTest extends TestCase
     }
 
     /** @test */
+    public function a_invalid_toggle_node_will_do_nothing()
+    {
+        $ast = new Ast();
+
+        $ast = $ast->add('toggleValue', null);
+
+        $ast = $ast->remove('invalidToggleValue', null);
+
+        $this->assertInstanceOf(Ast::class, $ast);
+        $this->assertNotEmpty($ast['toggleValue']);
+    }
+
+    /** @test */
+    public function a_toggle_node_will_be_removed()
+    {
+        $ast = new Ast();
+
+        $ast = $ast->add('toggleValue', null);
+
+        $ast = $ast->remove('toggleValue', 'a');
+
+        $this->assertInstanceOf(Ast::class, $ast);
+        $this->assertFalse(isset($ast['toggleValue']));
+    }
+
+    /** @test */
     public function a_single_node_can_be_added()
     {
         $ast = new Ast();
@@ -124,8 +150,8 @@ class AstTest extends TestCase
         /** @var \Spatie\QueryString\Ast\MultiNode $node */
         $node = $ast['multiValue[]'];
 
-        $this->assertTrue(isset($node->values()['a']));
-        $this->assertTrue(isset($node->values()['b']));
+        $this->assertNotEmpty($node->values()['a']);
+        $this->assertNotEmpty($node->values()['b']);
     }
 
     /** @test */
@@ -142,7 +168,7 @@ class AstTest extends TestCase
         /** @var \Spatie\QueryString\Ast\MultiNode $node */
         $node = $ast['multiValue[]'];
 
-        $this->assertTrue(isset($node->values()['a']));
+        $this->assertNotEmpty($node->values()['a']);
         $this->assertFalse(isset($node->values()['b']));
     }
 
