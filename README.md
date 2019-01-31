@@ -98,6 +98,21 @@ $queryString->sort('field');
 $queryString->sort('field');
 ```
 
+### Pagination
+
+There's built-in support for pagination:
+
+```
+$queryString->page(10); # /?page=10
+$queryString->nextPage(); # /?page=11
+$queryString->previousPage(); # /?page=9
+$queryString->resetPage(); # /?
+
+$queryString->isCurrentPage(1); # true
+```
+
+Note that changing any other value on the query string, will reset the page too.
+
 ### Other useful methods
 
 #### Base URL

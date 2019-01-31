@@ -219,6 +219,7 @@ class QueryStringTest extends TestCase
     {
         $this->assertTrue((new QueryString('/?page=2'))->isCurrentPage(2));
         $this->assertFalse((new QueryString('/?page=2'))->isCurrentPage(1));
+        $this->assertTrue((new QueryString('/?'))->isCurrentPage(1));
     }
 
     /** @test */
