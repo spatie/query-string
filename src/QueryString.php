@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Spatie\QueryString;
 
 use Spatie\QueryString\Ast\Ast;
+use Spatie\QueryString\Ast\SingleNode;
 
 final class QueryString
 {
     /** @var string */
     private $baseUrl;
 
-    /** @var \Spatie\QueryString\Ast\Ast */
+    /** @var \Spatie\QueryString\Ast\Ast|\Spatie\QueryString\Ast\Node[]|\Spatie\QueryString\Ast\ToggleNode[]|\Spatie\QueryString\Ast\SingleNode[]|\Spatie\QueryString\Ast\MultiNode[] */
     private $ast;
 
     /** @var string */
@@ -88,7 +89,11 @@ final class QueryString
 
         $queryString = clone $this;
 
-        $queryString->ast = $this->ast->add($name, $value);
+        if ($name !== 'page') {
+            $queryString = $queryString->resetPage();
+        }
+
+        $queryString->ast = $queryString->ast->add($name, $value);
 
         return $queryString;
     }
@@ -97,7 +102,11 @@ final class QueryString
     {
         $queryString = clone $this;
 
-        $queryString->ast = $this->ast->remove($name, $value);
+        if ($name !== 'page') {
+            $queryString = $queryString->resetPage();
+        }
+
+        $queryString->ast = $queryString->ast->remove($name, $value);
 
         return $queryString;
     }
@@ -106,7 +115,7 @@ final class QueryString
     {
         $queryString = clone $this;
 
-        $queryString->defaults[$name] = $value;
+        $queryString->defaults[$name] = (string) $value;
 
         return $queryString;
     }
@@ -123,6 +132,50 @@ final class QueryString
         $value = $this->resolveSortValue($value);
 
         return $this->toggle($this->sortName, $value);
+    }
+
+    public function page(int $index): QueryString
+    {
+        return $this->enable('page', (string) $index);
+    }
+
+    public function nextPage(): QueryString
+    {
+        $index = $this->getCurrentPage() + 1;
+
+        return $this->enable('page', (string) $index);
+    }
+
+    public function previousPage(): QueryString
+    {
+        $index = $this->getCurrentPage() - 1;
+
+        if ($index < 1) {
+            $index = 1;
+        }
+
+        return $this->enable('page', (string) $index);
+    }
+
+    public function resetPage(): QueryString
+    {
+        return $this->disable('page');
+    }
+
+    public function getCurrentPage(): int
+    {
+        $index = 1;
+
+        if (isset($this->ast['page']) && $this->ast['page'] instanceof SingleNode) {
+            $index = $this->ast['page']->value();
+        }
+
+        return (int) $index;
+    }
+
+    public function isCurrentPage(int $index): bool
+    {
+        return $this->getCurrentPage() === $index;
     }
 
     public function resolveFilterName($name): string

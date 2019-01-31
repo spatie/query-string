@@ -185,4 +185,72 @@ class QueryStringTest extends TestCase
 
         $this->assertEquals('/?', (string) $queryString->toggle('value', 'a'));
     }
+
+    /** @test */
+    public function it_can_set_a_page()
+    {
+        $queryString = new QueryString('/');
+
+        $this->assertEquals('/?page=2', (string) $queryString->page(2));
+    }
+
+    /** @test */
+    public function it_can_return_the_current_page()
+    {
+        $this->assertEquals(2, (new QueryString('/?page=2'))->getCurrentPage());
+        $this->assertEquals(1, (new QueryString('/'))->getCurrentPage());
+    }
+
+    /** @test */
+    public function it_can_set_the_next_page()
+    {
+        $this->assertEquals('/?page=2', (string) (new QueryString('/?page=1'))->nextPage());
+    }
+
+    /** @test */
+    public function it_can_set_the_previous_page()
+    {
+        $this->assertEquals('/?page=1', (string) (new QueryString('/?page=2'))->previousPage());
+        $this->assertEquals('/?page=1', (string) (new QueryString('/?page=1'))->previousPage());
+    }
+
+    /** @test */
+    public function is_current_page()
+    {
+        $this->assertTrue((new QueryString('/?page=2'))->isCurrentPage(2));
+        $this->assertFalse((new QueryString('/?page=2'))->isCurrentPage(1));
+    }
+
+    /** @test */
+    public function default_combined_with_page()
+    {
+        $queryString = (new QueryString('/?page=2'))->default('page', 1);
+
+        $this->assertEquals('/?', (string) $queryString->previousPage());
+        $this->assertEquals('/?page=3', (string) $queryString->nextPage());
+    }
+
+    /** @test */
+    public function reset_page()
+    {
+        $queryString = (new QueryString('/?page=2'));
+
+        $this->assertEquals('/?', (string) $queryString->resetPage());
+    }
+
+    /** @test */
+    public function page_is_reset_when_any_other_value_is_enabled()
+    {
+        $queryString = (new QueryString('/?page=2'));
+
+        $this->assertEquals('/?value', (string) $queryString->enable('value'));
+    }
+
+    /** @test */
+    public function page_is_reset_when_any_other_value_is_disabled()
+    {
+        $queryString = (new QueryString('/?page=2&value'));
+
+        $this->assertEquals('/?', (string) $queryString->disable('value'));
+    }
 }
