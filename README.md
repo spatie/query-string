@@ -102,7 +102,7 @@ $queryString->sort('field');
 
 There's built-in support for pagination:
 
-```
+```php
 $queryString->page(10); # /?page=10
 $queryString->nextPage(); # /?page=11
 $queryString->previousPage(); # /?page=9
