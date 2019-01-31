@@ -154,4 +154,35 @@ class QueryStringTest extends TestCase
         $this->assertInstanceOf(QueryString::class, $queryString);
         $this->assertEquals('/base/urls?', (string) $queryString);
     }
+
+    public function a_single_toggle_default_value_is_ignored()
+    {
+        $queryString = new QueryString('/');
+
+        $queryString = $queryString->default('value', 'a');
+
+        $this->assertEquals('/?', (string) $queryString->toggle('value', 'a'));
+        $this->assertEquals('/?value=b', (string) $queryString->toggle('value', 'b'));
+    }
+
+    /** @test */
+    public function a_multi_toggle_default_value_is_ignored()
+    {
+        $queryString = new QueryString('/');
+
+        $queryString = $queryString->default('value[]', 'a');
+
+        $this->assertEquals('/?', (string) $queryString->toggle('value[]', 'a'));
+        $this->assertEquals('/?value[]=b', (string) $queryString->toggle('value[]', 'b'));
+    }
+
+    /** @test */
+    public function a_default_value_is_removed_when_switched_to()
+    {
+        $queryString = new QueryString('/?value=b');
+
+        $queryString = $queryString->default('value', 'a');
+
+        $this->assertEquals('/?', (string) $queryString->toggle('value', 'a'));
+    }
 }

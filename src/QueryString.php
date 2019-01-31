@@ -20,6 +20,9 @@ final class QueryString
     /** @var string */
     private $sortName = 'sort';
 
+    /** @var array */
+    private $defaults = [];
+
     public static function new(string $uri): QueryString
     {
         return new self($uri);
@@ -79,6 +82,10 @@ final class QueryString
 
     public function enable(string $name, $value = null): QueryString
     {
+        if (isset($this->defaults[$name]) && $this->defaults[$name] === $value) {
+            return $this->disable($name);
+        }
+
         $queryString = clone $this;
 
         $queryString->ast = $this->ast->add($name, $value);
@@ -91,6 +98,15 @@ final class QueryString
         $queryString = clone $this;
 
         $queryString->ast = $this->ast->remove($name, $value);
+
+        return $queryString;
+    }
+
+    public function default(string $name, $value): QueryString
+    {
+        $queryString = clone $this;
+
+        $queryString->defaults[$name] = $value;
 
         return $queryString;
     }
