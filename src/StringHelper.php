@@ -23,7 +23,7 @@ final class StringHelper
     public static function ensureEndsWith(string $subject, string $needle): string
     {
         if (strpos($subject, $needle) === false) {
-            $subject = $subject . $needle;
+            $subject = $subject.$needle;
         }
 
         return $subject;
