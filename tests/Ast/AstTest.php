@@ -69,7 +69,7 @@ class AstTest extends TestCase
 
         $ast = $ast->remove('toggleValue', null);
 
-        $this->assertFalse(isset($ast['toggleValue']));
+        $this->assertArrayNotHasKey('toggleValue', $ast);
     }
 
     /** @test */
@@ -82,7 +82,7 @@ class AstTest extends TestCase
         $ast = $ast->remove('invalidToggleValue', null);
 
         $this->assertInstanceOf(Ast::class, $ast);
-        $this->assertNotEmpty($ast['toggleValue']);
+        $this->assertArrayHasKey('toggleValue', $ast);
     }
 
     /** @test */
@@ -95,7 +95,7 @@ class AstTest extends TestCase
         $ast = $ast->remove('toggleValue', 'a');
 
         $this->assertInstanceOf(Ast::class, $ast);
-        $this->assertFalse(isset($ast['toggleValue']));
+        $this->assertArrayNotHasKey('toggleValue', $ast);
     }
 
     /** @test */
@@ -134,7 +134,7 @@ class AstTest extends TestCase
 
         $ast = $ast->remove('singleValue', 'a');
 
-        $this->assertFalse(isset($ast['singleValue']));
+        $this->assertArrayNotHasKey('singleValue', $ast);
     }
 
     /** @test */
@@ -150,8 +150,8 @@ class AstTest extends TestCase
         /** @var \Spatie\QueryString\Ast\MultiNode $node */
         $node = $ast['multiValue[]'];
 
-        $this->assertNotEmpty($node->values()['a']);
-        $this->assertNotEmpty($node->values()['b']);
+        $this->assertArrayHasKey('a', $node->values());
+        $this->assertArrayHasKey('b', $node->values());
     }
 
     /** @test */
@@ -168,8 +168,8 @@ class AstTest extends TestCase
         /** @var \Spatie\QueryString\Ast\MultiNode $node */
         $node = $ast['multiValue[]'];
 
-        $this->assertNotEmpty($node->values()['a']);
-        $this->assertFalse(isset($node->values()['b']));
+        $this->assertArrayHasKey('a', $node->values());
+        $this->assertArrayNotHasKey('b', $node->values());
     }
 
     /** @test */
@@ -181,6 +181,6 @@ class AstTest extends TestCase
 
         $ast = $ast->remove('multiValue[]', null);
 
-        $this->assertFalse(isset($ast['multiValue[]']));
+        $this->assertArrayNotHasKey('multiValue[]', $ast);
     }
 }
