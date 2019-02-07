@@ -68,8 +68,8 @@ final class Ast implements ArrayAccess
 
         $node = $ast[$name];
 
-        if ($value === null){
-            unset ($ast[$name]);
+        if ($value === null) {
+            unset($ast[$name]);
 
             return $ast;
         }
