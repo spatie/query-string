@@ -13,11 +13,7 @@ final class StringHelper
 
     public static function endsWith(string $haystack, string $needle): bool
     {
-        if (substr($haystack, -strlen($needle)) === (string) $needle) {
-            return true;
-        }
-
-        return false;
+        return substr($haystack, -strlen($needle)) === $needle;
     }
 
     public static function ensureEndsWith(string $subject, string $needle): string
