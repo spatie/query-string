@@ -39,7 +39,7 @@ class MultiNodeTest extends TestCase
     }
 
     /** @test */
-    public function active_when_value_no_filterable_passed()
+    public function active_when_no_filterable_passed()
     {
         $node = new MultiNode('value', ['a', 'b']);
 

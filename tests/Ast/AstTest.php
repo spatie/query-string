@@ -37,7 +37,7 @@ class AstTest extends TestCase
     }
 
     /** @test */
-    public function to_string_sorts_the_paramters_alphabetically()
+    public function to_string_sorts_the_parameters_alphabetically()
     {
         $ast = new Ast();
 
