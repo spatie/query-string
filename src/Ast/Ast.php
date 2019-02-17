@@ -36,9 +36,7 @@ final class Ast implements ArrayAccess
 
         ksort($nodes);
 
-        foreach ($nodes as $node) {
-            $parts[] = (string) $node;
-        }
+        $parts = array_map('strval', $nodes);
 
         return implode('&', $parts);
     }
