@@ -30,8 +30,6 @@ final class Ast implements ArrayAccess
 
     public function __toString(): string
     {
-        $parts = [];
-
         $nodes = $this->nodes;
 
         ksort($nodes);
