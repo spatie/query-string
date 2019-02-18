@@ -30,15 +30,11 @@ final class Ast implements ArrayAccess
 
     public function __toString(): string
     {
-        $parts = [];
-
         $nodes = $this->nodes;
 
         ksort($nodes);
 
-        foreach ($nodes as $node) {
-            $parts[] = (string) $node;
-        }
+        $parts = array_map('strval', $nodes);
 
         return implode('&', $parts);
     }
