@@ -146,7 +146,7 @@ $queryString->clear('multi[]');
 
 #### Active parameter or not
 
-```
+```php
 # /?multi[]=a
 
 $queryString->isActive('multi[]'); # true
@@ -154,7 +154,7 @@ $queryString->isActive('multi[]', 'a'); # true
 $queryString->isActive('multi[]', 'b'); # false
 ```
 
-```
+```php
 # /?single=a
 
 $queryString->isActive('single'); # true
@@ -162,7 +162,7 @@ $queryString->isActive('single', 'a'); # true
 $queryString->isActive('single', 'b'); # false
 ```
 
-```
+```php
 # /?toggle
 
 $queryString->isActive('toggle'); # true
