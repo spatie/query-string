@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Spatie\QueryString\Ast;
 
-use TypeError;
 use ArrayAccess;
 use Spatie\QueryString\StringHelper;
+use TypeError;
 
 final class Ast implements ArrayAccess
 {
