@@ -42,7 +42,7 @@ final class QueryString
 
     public function __toString()
     {
-        return "{$this->baseUrl}?{$this->ast}";
+        return rtrim("{$this->baseUrl}?{$this->ast}", '?');
     }
 
     public function withBaseUrl(string $baseUrl): QueryString

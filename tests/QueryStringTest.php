@@ -14,20 +14,20 @@ class QueryStringTest extends TestCase
     {
         $this->assertEquals('/?value', QueryString::new('/')->toggle('value'));
 
-        $this->assertEquals('/?', QueryString::new('/?value')->toggle('value'));
+        $this->assertEquals('/', QueryString::new('/?value')->toggle('value'));
     }
 
     /** @test */
     public function it_can_clear_a_toggle_without_value()
     {
-        $this->assertEquals('/?', QueryString::new('/?value')->clear('value'));
+        $this->assertEquals('/', QueryString::new('/?value')->clear('value'));
     }
 
     /** @test */
     public function active_for_toggle_without_value()
     {
         $this->assertTrue(QueryString::new('/?value')->isActive('value'));
-        $this->assertFalse(QueryString::new('/?')->isActive('value'));
+        $this->assertFalse(QueryString::new('/')->isActive('value'));
     }
 
     /** @test */
@@ -35,7 +35,7 @@ class QueryStringTest extends TestCase
     {
         $this->assertEquals('/?value=a', QueryString::new('/')->toggle('value', 'a'));
 
-        $this->assertEquals('/?', QueryString::new('/?value=a')->toggle('value', 'a'));
+        $this->assertEquals('/', QueryString::new('/?value=a')->toggle('value', 'a'));
 
         $this->assertEquals('/?value=b', QueryString::new('/?value=a')->toggle('value', 'b'));
     }
@@ -43,7 +43,7 @@ class QueryStringTest extends TestCase
     /** @test */
     public function it_can_clear_a_single_toggle()
     {
-        $this->assertEquals('/?', QueryString::new('/?value=a')->clear('value'));
+        $this->assertEquals('/', QueryString::new('/?value=a')->clear('value'));
     }
 
     /** @test */
@@ -51,13 +51,13 @@ class QueryStringTest extends TestCase
     {
         $this->assertTrue(QueryString::new('/?value=a')->isActive('value', 'a'));
         $this->assertFalse(QueryString::new('/?value=a')->isActive('value', 'b'));
-        $this->assertFalse(QueryString::new('/?')->isActive('value', 'a'));
+        $this->assertFalse(QueryString::new('/')->isActive('value', 'a'));
     }
 
     /** @test */
     public function it_can_toggle_a_multi_toggle()
     {
-        $this->assertEquals('/?', QueryString::new('/?value[]=a')->toggle('value[]', 'a'));
+        $this->assertEquals('/', QueryString::new('/?value[]=a')->toggle('value[]', 'a'));
         $this->assertEquals('/?value[]=a&value[]=b', QueryString::new('/?value[]=a')->toggle('value[]', 'b'));
         $this->assertEquals('/?value[]=b', QueryString::new('/?value[]=a&value[]=b')->toggle('value[]', 'a'));
         $this->assertEquals('/?value[]=a', QueryString::new('/')->toggle('value[]', 'a'));
@@ -66,7 +66,7 @@ class QueryStringTest extends TestCase
     /** @test */
     public function it_can_clear_a_multi_toggle()
     {
-        $this->assertEquals('/?', QueryString::new('/?value[]=a&value[]=b')->clear('value[]'));
+        $this->assertEquals('/', QueryString::new('/?value[]=a&value[]=b')->clear('value[]'));
     }
 
     /** @test */
@@ -75,7 +75,7 @@ class QueryStringTest extends TestCase
         $this->assertTrue(QueryString::new('/?value[]=a')->isActive('value[]', 'a'));
         $this->assertTrue(QueryString::new('/?value[]=a')->isActive('value[]'));
         $this->assertFalse(QueryString::new('/?value[]=a')->isActive('value[]', 'b'));
-        $this->assertFalse(QueryString::new('/?')->isActive('value[]', 'a'));
+        $this->assertFalse(QueryString::new('/')->isActive('value[]', 'a'));
     }
 
     /** @test */
@@ -152,7 +152,7 @@ class QueryStringTest extends TestCase
         $queryString = $queryString->withBaseUrl('/base/urls');
 
         $this->assertInstanceOf(QueryString::class, $queryString);
-        $this->assertEquals('/base/urls?', (string) $queryString);
+        $this->assertEquals('/base/urls', (string) $queryString);
     }
 
     public function a_single_toggle_default_value_is_ignored()
@@ -161,7 +161,7 @@ class QueryStringTest extends TestCase
 
         $queryString = $queryString->default('value', 'a');
 
-        $this->assertEquals('/?', (string) $queryString->toggle('value', 'a'));
+        $this->assertEquals('/', (string) $queryString->toggle('value', 'a'));
         $this->assertEquals('/?value=b', (string) $queryString->toggle('value', 'b'));
     }
 
@@ -172,7 +172,7 @@ class QueryStringTest extends TestCase
 
         $queryString = $queryString->default('value[]', 'a');
 
-        $this->assertEquals('/?', (string) $queryString->toggle('value[]', 'a'));
+        $this->assertEquals('/', (string) $queryString->toggle('value[]', 'a'));
         $this->assertEquals('/?value[]=b', (string) $queryString->toggle('value[]', 'b'));
     }
 
@@ -183,7 +183,7 @@ class QueryStringTest extends TestCase
 
         $queryString = $queryString->default('value', 'a');
 
-        $this->assertEquals('/?', (string) $queryString->toggle('value', 'a'));
+        $this->assertEquals('/', (string) $queryString->toggle('value', 'a'));
     }
 
     /** @test */
@@ -219,7 +219,7 @@ class QueryStringTest extends TestCase
     {
         $this->assertTrue((new QueryString('/?page=2'))->isCurrentPage(2));
         $this->assertFalse((new QueryString('/?page=2'))->isCurrentPage(1));
-        $this->assertTrue((new QueryString('/?'))->isCurrentPage(1));
+        $this->assertTrue((new QueryString('/'))->isCurrentPage(1));
     }
 
     /** @test */
@@ -227,7 +227,7 @@ class QueryStringTest extends TestCase
     {
         $queryString = (new QueryString('/?page=2'))->default('page', 1);
 
-        $this->assertEquals('/?', (string) $queryString->previousPage());
+        $this->assertEquals('/', (string) $queryString->previousPage());
         $this->assertEquals('/?page=3', (string) $queryString->nextPage());
     }
 
@@ -236,7 +236,7 @@ class QueryStringTest extends TestCase
     {
         $queryString = (new QueryString('/?page=2'));
 
-        $this->assertEquals('/?', (string) $queryString->resetPage());
+        $this->assertEquals('/', (string) $queryString->resetPage());
     }
 
     /** @test */
@@ -252,6 +252,6 @@ class QueryStringTest extends TestCase
     {
         $queryString = (new QueryString('/?page=2&value'));
 
-        $this->assertEquals('/?', (string) $queryString->disable('value'));
+        $this->assertEquals('/', (string) $queryString->disable('value'));
     }
 }
