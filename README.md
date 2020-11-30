@@ -1,6 +1,7 @@
 # QueryString
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/query-string.svg?style=flat-square)](https://packagist.org/packages/spatie/query-string)
+![run-tests](https://github.com/spatie/query-string/workflows/run-tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/query-string.svg?style=flat-square)](https://packagist.org/packages/spatie/query-string)
 
 Work with query strings
