@@ -1,9 +1,6 @@
 # QueryString
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/query-string.svg?style=flat-square)](https://packagist.org/packages/spatie/query-string)
-[![Build Status](https://img.shields.io/travis/spatie/query-string/master.svg?style=flat-square)](https://travis-ci.org/spatie/query-string)
-[![StyleCI](https://github.styleci.io/repos/161786309/shield?branch=master)](https://github.styleci.io/repos/161786309)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/query-string.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/query-string)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/query-string.svg?style=flat-square)](https://packagist.org/packages/spatie/query-string)
 
 Work with query strings
