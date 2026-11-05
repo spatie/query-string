@@ -11,7 +11,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                php: [8.2, 8.1, 8.0, 7.4]
+                php: [8.6, 8.5, 8.2, 8.1, 8.0, 7.4]
                 dependency-version: [prefer-lowest, prefer-stable]
                 os: [ubuntu-latest, windows-latest]
 
@@ -19,10 +19,10 @@ jobs:
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: Cache dependencies
-              uses: actions/cache@v2
+              uses: actions/cache@v4
               with:
                   path: ~/.composer/cache/files
                   key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
@@ -33,6 +33,7 @@ jobs:
                   php-version: ${{ matrix.php }}
                   extensions: json, dom, curl, libxml, mbstring
                   coverage: none
+                  tools: composer:v2
 
             - name: Install dependencies
               run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
