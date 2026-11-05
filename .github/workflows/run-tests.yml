@@ -10,8 +10,9 @@ jobs:
     test:
         runs-on: ${{ matrix.os }}
         strategy:
+            fail-fast: false
             matrix:
-                php: [8.2, 8.1, 8.0, 7.4]
+                php: [8.6, 8.5, 8.2, 8.1, 8.0, 7.4]
                 dependency-version: [prefer-lowest, prefer-stable]
                 os: [ubuntu-latest, windows-latest]
 
@@ -19,10 +20,10 @@ jobs:
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: Cache dependencies
-              uses: actions/cache@v2
+              uses: actions/cache@v4
               with:
                   path: ~/.composer/cache/files
                   key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
@@ -33,12 +34,18 @@ jobs:
                   php-version: ${{ matrix.php }}
                   extensions: json, dom, curl, libxml, mbstring
                   coverage: none
+                  tools: composer:v2
+
+            - name: Show runtime versions
+              run: |
+                  php --version
+                  composer --version
 
             - name: Install dependencies
               run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
             - name: Configure matchers
-              uses: mheap/phpunit-matcher-action@master
+              uses: mheap/phpunit-matcher-action@v1.4.0
 
             - name: Execute tests
               run: vendor/bin/phpunit --teamcity
